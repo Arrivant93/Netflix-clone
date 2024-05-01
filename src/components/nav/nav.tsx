@@ -8,7 +8,9 @@ const NavBar: FC = (): JSX.Element => {
   return (
     <nav className="flex z-50 fixed w-full justify-between global-padding-x py-3 bg-[#161617cc] backdrop-blur-md">
       <div className="flex items-center gap-10">
-        <Image src="/Logonetflix.png" width={100} height={100} alt="LogoNetflix" />
+        <Link href="/">
+          <Image src="/Logonetflix.png" width={100} height={100} alt="LogoNetflix" />
+        </Link>
         <div className="space-x-6">
           <Link variant="nav-links" href="/">
             Accueil
