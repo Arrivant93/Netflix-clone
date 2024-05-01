@@ -1,27 +1,40 @@
 import { Button } from "@/components/ui/button";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { Title } from "@/components/ui/title";
 import { Info, Play } from "lucide-react";
 import { NextPage } from "next";
 import Image from "next/image";
 
 const HomePage: NextPage = (): JSX.Element => {
+  // en attendant d'avoir l'api des films
+  const movies = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
   return (
     <>
+      {/* Hero */}
       <section className="relative">
         <Image
-          className="object-cover w-full h-[800px]"
+          className="object-cover w-full max-h-[1280px] h-full"
           src="/1341732.jpeg"
-          width={600}
-          height={600}
+          width={1920}
+          quality={100}
+          height={800}
           alt="Hero"
         />
-        <div className="absolute top-[40%] left-6 max-w-2xl space-y-4">
+        <article className="absolute top-[40%] max-w-2xl space-y-4 global-padding-x">
           <Image src="/Shangri-La-Frontier-logo.png" width={400} height={400} alt="Nom du manga" />
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde omnis quaerat, nobis
             accusantium voluptatum voluptas! Quidem inventore voluptatum fugiat illo officia et,
             quos possimus aperiam.
           </p>
-          <div className="flex gap-2  ">
+          <div className="flex gap-2">
             <Button className="flex text-black px-4 py-1.5 rounded-sm font-medium gap-2 text-[14px] items-center bg-white">
               <Play color="#000" className="" />
               Lecture
@@ -30,23 +43,45 @@ const HomePage: NextPage = (): JSX.Element => {
               <Info /> Plus d&apos;infos
             </Button>
           </div>
-        </div>
-        <div className="absolute bottom-32 right-0 z-10 w-16 pl-3 py-1.5 border-l-2  bg-zinc-700">
+        </article>
+        <article className="absolute bottom-32 right-0 z-10 w-16 pl-3 py-1.5 border-l-2  bg-zinc-700">
           <p>16+</p>
-        </div>
+        </article>
       </section>
-      <section className="space-y-12 px-6 mt-16">
+      {/* Hero */}
+
+      <section className="space-y-12 global-padding-x mt-16">
         <article>
-          <h2 className="mb-2">Appréciés sur Netflix</h2>
-          <div className="h-[110px] w-[200px] bg-white sapce" />
+          <Title variant="section" className="mb-2">
+            Notre sélection du jour pour vous
+          </Title>
+          <Carousel>
+            <CarouselContent>
+              {movies.map((item, key) => (
+                <CarouselItem className="basis-1/6" key={key}>
+                  <div className="h-[160px] bg-white sapce" />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
         </article>
         <article>
-          <h2 className="mb-2">Séries policiere d&apos;Asie de l&apos;Est</h2>
-          <div className="h-[110px] w-[200px] bg-white" />
-        </article>
-        <article>
-          <h2 className="mb-2"> Netflix</h2>
-          <div className="h-[110px] w-[200px] bg-white" />
+          <Title variant="section" className="mb-2">
+            Ma liste
+          </Title>
+          <Carousel>
+            <CarouselContent>
+              {movies.map((item, key) => (
+                <CarouselItem className="basis-1/6" key={key}>
+                  <div className="h-[160px] bg-white sapce" />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
         </article>
       </section>
     </>
