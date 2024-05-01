@@ -5,7 +5,7 @@ import { AuthFormValidator } from "@/lib/zod";
 import { AuthError } from "next-auth";
 import { z } from "zod";
 
-export const register = async (values: z.infer<typeof AuthFormValidator>) => {
+export const login = async (values: z.infer<typeof AuthFormValidator>) => {
   const validatedFields = AuthFormValidator.safeParse(values);
 
   if (!validatedFields.success) {

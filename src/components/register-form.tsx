@@ -1,19 +1,16 @@
 "use client";
 
-import { register } from "@/actions/auth/register";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { AuthFormValidator } from "@/lib/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { FC, useTransition } from "react";
+import { FC } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const RegisterForm: FC = () => {
-  const [isPending, startTransition] = useTransition();
-
   const form = useForm<z.infer<typeof AuthFormValidator>>({
     resolver: zodResolver(AuthFormValidator),
     defaultValues: {
@@ -22,11 +19,7 @@ const RegisterForm: FC = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof AuthFormValidator>) => {
-    startTransition(() => {
-      register(values);
-    });
-  };
+  const onSubmit = (values: z.infer<typeof AuthFormValidator>) => {};
 
   return (
     <div className="bg-zinc-900 p-10 rounded-sm ">
@@ -51,13 +44,19 @@ const RegisterForm: FC = () => {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input placeholder="Password" {...field} type="password" />
+                  <Input placeholder="*********" {...field} type="password" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button className="w-full" size="sm" colorScheme="rouge" type="submit">
+          <Button
+            className="w-full"
+            size="sm"
+            colorScheme="rouge"
+            type="submit"
+            aria-label="Boutton inscription"
+          >
             S&apos;inscrire
           </Button>
         </form>
@@ -67,7 +66,7 @@ const RegisterForm: FC = () => {
         Deja un compte ?{" "}
         <Link href={"/login"} className="text-zinc-200 hover:underline hover:text-white">
           Connectez-vous{" "}
-        </Link>{" "}
+        </Link>
       </p>
     </div>
   );
