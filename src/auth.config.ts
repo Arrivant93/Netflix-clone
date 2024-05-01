@@ -10,7 +10,7 @@ export default {
 
         if (validatedFields.success) {
           const { email, password } = validatedFields.data;
-          console.log(email, password);
+          return { email };
         }
         return null;
       },

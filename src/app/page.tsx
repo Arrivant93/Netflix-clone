@@ -1,9 +1,7 @@
+import { Button } from "@/components/ui/button";
+import { Info, Play } from "lucide-react";
 import { NextPage } from "next";
 import Image from "next/image";
-import { Play } from "lucide-react";
-import { Info } from "lucide-react";
-import { Button } from "@/components/ui/button";
-
 
 const HomePage: NextPage = (): JSX.Element => {
   return (
@@ -17,16 +15,11 @@ const HomePage: NextPage = (): JSX.Element => {
           alt="Hero"
         />
         <div className="absolute top-[40%] left-6 max-w-2xl space-y-4">
-          <Image
-            src="/Shangri-La-Frontier-logo.png"
-            width={400}
-            height={400}
-            alt="Nom du manga"
-          />
+          <Image src="/Shangri-La-Frontier-logo.png" width={400} height={400} alt="Nom du manga" />
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde omnis
-            quaerat, nobis accusantium voluptatum voluptas! Quidem inventore
-            voluptatum fugiat illo officia et, quos possimus aperiam.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde omnis quaerat, nobis
+            accusantium voluptatum voluptas! Quidem inventore voluptatum fugiat illo officia et,
+            quos possimus aperiam.
           </p>
           <div className="flex gap-2  ">
             <Button className="flex text-black px-4 py-1.5 rounded-sm font-medium gap-2 text-[14px] items-center bg-white">
@@ -38,9 +31,9 @@ const HomePage: NextPage = (): JSX.Element => {
             </Button>
           </div>
         </div>
-            <div className="absolute bottom-32 right-0 z-10 w-16 pl-3 py-1.5 border-l-2  bg-zinc-700">
-              <p>16+</p>
-            </div>
+        <div className="absolute bottom-32 right-0 z-10 w-16 pl-3 py-1.5 border-l-2  bg-zinc-700">
+          <p>16+</p>
+        </div>
       </section>
       <section className="space-y-12 px-6 mt-16">
         <article>
