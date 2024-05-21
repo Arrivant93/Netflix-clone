@@ -1,16 +1,28 @@
 "use client";
 
+import { register } from "@/actions/auth/register";
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Icons } from "@/lib/icons";
 import { AuthFormValidator } from "@/lib/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { FC } from "react";
+import { FC, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useToast } from "@/components/ui/use-toast";
 
 const RegisterForm: FC = () => {
+  const { toast } = useToast();
+  const [isPending, startTranstion] = useTransition();
+
   const form = useForm<z.infer<typeof AuthFormValidator>>({
     resolver: zodResolver(AuthFormValidator),
     defaultValues: {
@@ -19,7 +31,19 @@ const RegisterForm: FC = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof AuthFormValidator>) => {};
+  const onSubmit = (values: z.infer<typeof AuthFormValidator>) => {
+    startTranstion(() => {
+      register(values).then((data) => {
+        if (!data.success) {
+          toast({
+            title: "Error",
+            description: data.message,
+            variant: "destructive",
+          });
+        }
+      });
+    });
+  };
 
   return (
     <div className="bg-zinc-900 p-10 rounded-sm ">
@@ -32,7 +56,11 @@ const RegisterForm: FC = () => {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input placeholder="johndoe@gmail.com" type="email" {...field} />
+                  <Input
+                    placeholder="johndoe@gmail.com"
+                    type="email"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -56,15 +84,19 @@ const RegisterForm: FC = () => {
             colorScheme="rouge"
             type="submit"
             aria-label="Boutton inscription"
+            disabled={isPending}
           >
-            S&apos;inscrire
+            {isPending ? <Icons.loading /> : "S'inscrire"}
           </Button>
         </form>
       </Form>
 
       <p className="text-xs text-zinc-400 mt-6 text-center ">
         Deja un compte ?{" "}
-        <Link href={"/login"} className="text-zinc-200 hover:underline hover:text-white">
+        <Link
+          href={"/login"}
+          className="text-zinc-200 hover:underline hover:text-white"
+        >
           Connectez-vous{" "}
         </Link>
       </p>

@@ -5,6 +5,7 @@ import "@/styles/globals.css";
 import type { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
 import { Inter } from "next/font/google";
+import { Toaster } from "@/components/ui/toaster"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,6 +27,7 @@ export default async function RootLayout({
         <body className={inter.className}>
           <NavBar />
           <main>{children}</main>
+          <Toaster />
           <Footer />
         </body>
       </html>
