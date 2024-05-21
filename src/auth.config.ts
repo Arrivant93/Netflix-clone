@@ -25,7 +25,7 @@ export default {
           );
           // if (!isPasswordValid) return null;
 
-          return { id: potentialUser.id as string, email: potentialUser.email };
+          return { id: potentialUser.id, email: potentialUser.email };
         }
         return null;
       },

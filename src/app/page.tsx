@@ -15,8 +15,7 @@ import Image from "next/image";
 const HomePage: NextPage = async () => {
   // en attendant d'avoir l'api des films
   const movies = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  const bite = await auth();
-  console.log(bite);
+
   return (
     <>
       {/* Hero */}

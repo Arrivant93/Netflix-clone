@@ -11,7 +11,7 @@ export const {
     async session({ session, token }) {
       if (session.user && token.sub) {
         session.user.email = token.email;
-        session.user.id = token.id;
+        session.user.id = token.sub;
       }
 
       return session;
