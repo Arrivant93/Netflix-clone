@@ -18,10 +18,12 @@ import { FC, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useToast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
 
 const RegisterForm: FC = () => {
   const { toast } = useToast();
   const [isPending, startTranstion] = useTransition();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof AuthFormValidator>>({
     resolver: zodResolver(AuthFormValidator),
@@ -41,6 +43,11 @@ const RegisterForm: FC = () => {
             variant: "destructive",
           });
         }
+        toast({
+          title: "Sucess",
+          description: "vous etes inscrit",
+        });
+        router.push(data.redirectTo as string);
       });
     });
   };

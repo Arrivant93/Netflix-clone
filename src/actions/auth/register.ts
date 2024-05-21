@@ -23,5 +23,5 @@ export const register = async (data: z.infer<typeof AuthFormValidator>) => {
     data: { email: email, password: hashedPassword },
   });
   console.log(user);
-  return { success: true, message: "pdpdpd" };
+  return { success: true, message: "pdpdpd", redirectTo: "/login" };
 };

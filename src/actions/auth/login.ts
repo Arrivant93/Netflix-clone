@@ -9,20 +9,20 @@ export const login = async (values: z.infer<typeof AuthFormValidator>) => {
   const validatedFields = AuthFormValidator.safeParse(values);
 
   if (!validatedFields.success) {
-    return { error: "Champs icorrecte" };
+    return { success: false,error: "Champs icorrecte" };
   }
 
   const { email, password } = validatedFields.data;
 
   try {
-    await signIn("credentials", { email, password });
+    await signIn("credentials", { email, password,redirectTo:"/" });
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":
-          return { error: "L'email ou le mot de passe est incorrect" };
+          return {success: false, error: "L'email ou le mot de passe est incorrect" };
         default:
-          return { error: "Une erreur est survenue, veuillez réessayer ultérieurement" };
+          return {success: false, error: "Une erreur est survenue, veuillez réessayer ultérieurement" };
       }
     }
 

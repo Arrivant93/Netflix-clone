@@ -2,7 +2,13 @@
 
 import { login } from "@/actions/auth/login";
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Icons } from "@/lib/icons";
 import { AuthFormValidator } from "@/lib/zod";
@@ -11,8 +17,10 @@ import Link from "next/link";
 import { FC, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useToast } from "@/components/ui/use-toast";
 
 const LoginForm: FC = () => {
+  const { toast } = useToast();
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof AuthFormValidator>>({
@@ -25,7 +33,15 @@ const LoginForm: FC = () => {
 
   function onSubmit(values: z.infer<typeof AuthFormValidator>) {
     startTransition(() => {
-      login(values);
+      login(values).then((data) => {
+        if (!data?.success) {
+          toast({
+            title: "Error",
+            description: data?.error,
+            variant: "destructive",
+          });
+        }
+      });
     });
   }
 
@@ -57,7 +73,12 @@ const LoginForm: FC = () => {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input placeholder="*********" {...field} disabled={isPending} type="password" />
+                  <Input
+                    placeholder="*********"
+                    {...field}
+                    disabled={isPending}
+                    type="password"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -77,7 +98,10 @@ const LoginForm: FC = () => {
 
       <p className="text-xs text-zinc-400 mt-6 ">
         Premiere visite sur Netflix ?{" "}
-        <Link href={"/register"} className="text-zinc-200 hover:underline hover:text-white">
+        <Link
+          href={"/register"}
+          className="text-zinc-200 hover:underline hover:text-white"
+        >
           Inscrivez-vous{" "}
         </Link>{" "}
       </p>

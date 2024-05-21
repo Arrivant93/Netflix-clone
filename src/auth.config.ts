@@ -23,7 +23,7 @@ export default {
             password,
             potentialUser!.password as string
           );
-          // if (!isPasswordValid) return null;
+          if (!isPasswordValid) return null;
 
           return { id: potentialUser.id, email: potentialUser.email };
         }
