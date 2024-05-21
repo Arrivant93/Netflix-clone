@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import { Button } from "@/components/ui/button";
 import {
   Carousel,
@@ -11,10 +12,11 @@ import { Info, Play } from "lucide-react";
 import { NextPage } from "next";
 import Image from "next/image";
 
-const HomePage: NextPage = (): JSX.Element => {
+const HomePage: NextPage = async () => {
   // en attendant d'avoir l'api des films
   const movies = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
+  const bite = await auth();
+  console.log(bite);
   return (
     <>
       {/* Hero */}
@@ -28,11 +30,16 @@ const HomePage: NextPage = (): JSX.Element => {
           alt="Hero"
         />
         <article className="absolute top-[40%] max-w-2xl space-y-4 global-padding-x">
-          <Image src="/Shangri-La-Frontier-logo.png" width={400} height={400} alt="Nom du manga" />
+          <Image
+            src="/Shangri-La-Frontier-logo.png"
+            width={400}
+            height={400}
+            alt="Nom du manga"
+          />
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde omnis quaerat, nobis
-            accusantium voluptatum voluptas! Quidem inventore voluptatum fugiat illo officia et,
-            quos possimus aperiam.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde omnis
+            quaerat, nobis accusantium voluptatum voluptas! Quidem inventore
+            voluptatum fugiat illo officia et, quos possimus aperiam.
           </p>
           <div className="flex gap-2">
             <Button className="flex text-black px-4 py-1.5 rounded-sm font-medium gap-2 text-[14px] items-center bg-white">

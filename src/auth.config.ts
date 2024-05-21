@@ -13,23 +13,19 @@ export default {
         if (validatedFields.success) {
           const { email, password } = validatedFields.data;
           //on verifie  si l'email est deja dans la base de données
-          const isEmailTaken =
-            (await prisma.user.count({
-              where: { email: email },
-            })) > 0;
+          const potentialUser = await prisma.user.findFirst({
+            where: { email: email },
+          });
+          if (potentialUser === null) return null;
 
-          if (!isEmailTaken) return null;
-
-          //recup le mot de passe hash (bcrypt)
-          const passwordHash = await prisma.user.findUnique({
-            where :{
-              email : email 
-            }
-          })
-          
           // Fonction pour comparer le mot de passe avec le hash (bcrypt)
-          const isPasswordValid = await bcrypt.compare(password, passwordHash!.password as string);
+          const isPasswordValid = await bcrypt.compare(
+            password,
+            potentialUser!.password as string
+          );
+          // if (!isPasswordValid) return null;
 
+          return { id: potentialUser.id as string, email: potentialUser.email };
         }
         return null;
       },
