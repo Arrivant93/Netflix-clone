@@ -25,7 +25,16 @@ export default {
           );
           if (!isPasswordValid) return null;
 
-          return { id: potentialUser.id, email: potentialUser.email };
+          // création de la watchlist
+          const watchlist = await prisma.watchlist.create({
+            data: {
+              userId: potentialUser.id
+            }
+          })
+
+          console.log('WATCHLIST', watchlist)
+
+          // return { id: potentialUser.id, email: potentialUser.email,  watchlistId: watchlist.id};
         }
         return null;
       },

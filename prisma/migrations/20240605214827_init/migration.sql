@@ -53,6 +53,39 @@ CREATE TABLE "VerificationRequest" (
     CONSTRAINT "VerificationRequest_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "Commentaire" (
+    "id" TEXT NOT NULL,
+    "content" TEXT NOT NULL,
+    "rating" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "animeId" TEXT NOT NULL,
+
+    CONSTRAINT "Commentaire_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Anime" (
+    "id" TEXT NOT NULL,
+    "title" TEXT NOT NULL,
+    "Description" TEXT NOT NULL,
+    "rating" TEXT NOT NULL,
+    "releaseDate" INTEGER NOT NULL,
+    "image" TEXT NOT NULL,
+    "malId" TEXT NOT NULL,
+    "watchlistId" TEXT,
+
+    CONSTRAINT "Anime_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Watchlist" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+
+    CONSTRAINT "Watchlist_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "Account_providerId_providerAccountId_key" ON "Account"("providerId", "providerAccountId");
 
@@ -76,3 +109,12 @@ ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId"
 
 -- AddForeignKey
 ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Commentaire" ADD CONSTRAINT "Commentaire_animeId_fkey" FOREIGN KEY ("animeId") REFERENCES "Anime"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Anime" ADD CONSTRAINT "Anime_watchlistId_fkey" FOREIGN KEY ("watchlistId") REFERENCES "Watchlist"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Watchlist" ADD CONSTRAINT "Watchlist_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

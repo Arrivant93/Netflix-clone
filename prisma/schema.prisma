@@ -38,17 +38,19 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String      @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?     @unique
   emailVerified DateTime?
-  password      String?   
+  password      String?
   image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
   accounts      Account[]
+  watchlist     Watchlist[]
   sessions      Session[]
 }
+
 model VerificationRequest {
   id         String   @id @default(cuid())
   identifier String
@@ -58,4 +60,33 @@ model VerificationRequest {
   updatedAt  DateTime @updatedAt
 
   @@unique([identifier, token])
+}
+
+model Commentaire {
+  id      String @id @default(cuid())
+  content String
+  rating  String
+  userId  String
+  animeId String
+  Anime   Anime  @relation(fields: [animeId], references: [id])
+}
+
+model Anime {
+  id          String        @id @default(cuid())
+  title       String
+  Description String
+  rating      String
+  releaseDate Int
+  image       String
+  malId       String
+  Commentaire Commentaire[]
+  Watchlist   Watchlist?    @relation(fields: [watchlistId], references: [id])
+  watchlistId String?
+}
+
+model Watchlist {
+  id      String  @id @default(cuid())
+  userId  String
+  User    User    @relation(fields: [userId], references: [id])
+  Animes  Anime[]
 }

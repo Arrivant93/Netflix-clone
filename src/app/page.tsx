@@ -11,12 +11,24 @@ import { Title } from "@/components/ui/title";
 import { Info, Play } from "lucide-react";
 import { NextPage } from "next";
 import Image from "next/image";
+import { anime } from "@/jikan-api/anime/anime";
+import Card from "@/components/cards/card";
+import { redirect } from "next/navigation";
+
 
 const HomePage: NextPage = async () => {
   // en attendant d'avoir l'api des films
-  const movies = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  const bite = await auth();
-  console.log(bite);
+  const animes = await anime.getAnimes();
+  // console.log(animes.data);
+
+  const session = await auth()
+
+  if (!session) {
+    redirect('/login'); // Redirection vers la page de connexion
+  }
+
+  console.log(session);
+
   return (
     <>
       {/* Hero */}
@@ -64,9 +76,10 @@ const HomePage: NextPage = async () => {
           </Title>
           <Carousel>
             <CarouselContent>
-              {movies.map((item, key) => (
+              {animes.data.map((item, key) => (
                 <CarouselItem className="basis-1/6" key={key}>
-                  <div className="h-[160px] bg-white sapce" />
+                  <Card mal_id={item.mal_id} releaseYear={item.aired.prop.from.year!} genres={item.genres} rating={item.rating} year={item.aired.prop.to.year!} synopsis={item.synopsis}episodes={item.episodes!} scored_by={item.scored_by} title={item.title} score={item.score} image={item.images.jpg.image_url}/>
+
                 </CarouselItem>
               ))}
             </CarouselContent>
@@ -80,7 +93,7 @@ const HomePage: NextPage = async () => {
           </Title>
           <Carousel>
             <CarouselContent>
-              {movies.map((item, key) => (
+            {animes.data.map((item, key) => (
                 <CarouselItem className="basis-1/6" key={key}>
                   <div className="h-[160px] bg-white sapce" />
                 </CarouselItem>

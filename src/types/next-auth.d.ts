@@ -8,11 +8,14 @@ declare module "next-auth/jwt" {
   interface JWT {
     id: UserId;
     email: string;
+    watchlistId: string
   }
 }
 
 declare module "next-auth" {
   interface Session {
-    user: User & {} & DefaultSession["user"];
+    user: User & {
+      watchlistId: string
+    } & DefaultSession["user"];
   }
 }

@@ -12,12 +12,14 @@ export const {
       if (session.user && token.sub) {
         session.user.email = token.email;
         session.user.id = token.sub;
+        session.user.watchlistId = token.watchlistId
       }
 
       return session;
     },
 
     async jwt({ token }) {
+
       return token;
     },
   },
